@@ -11,6 +11,10 @@ router.get('/ok', async (req, res) => {
   res.send(genres);
 });
 
+router.post('/post', async (req, res) => { 
+  res.send('Post ok');
+});
+
 router.get('/exception', async (req, res) => {
   throw new Error('unhandled Exception ');
 });

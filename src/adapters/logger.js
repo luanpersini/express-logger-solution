@@ -4,7 +4,7 @@ const logger = winston.createLogger({
   exitOnError: false,
   transports: [
     new winston.transports.Console({
-      format: winston.format.combine(winston.format.timestamp(), winston.format.prettyPrint())
+      format: winston.format.combine(winston.format.json(), winston.format.timestamp(), winston.format.prettyPrint())
     })
   ]
 });
