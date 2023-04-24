@@ -19,15 +19,30 @@ morgan.token('traceId', (req) => {
 });
 
 const morganStack = JSON.stringify({
-  traceId: ":traceId",    
-  url: ":method - :url",  
-  status: ":status", 
-  userAgent: ":user-agent", 
-  remoteAddr: ":remote-addr", 
-  remoteUser: ":remote-user", 
-  referrer: ":referrer",  
-  responseTime: ":response-time[0] ms",
-  body: ":body"  
-}); 
+  url: ':method - :url',
+  status: ':status',
+  traceId: ':traceId',
+  userAgent: ':user-agent',
+  remoteAddr: ':remote-addr',
+  remoteUser: ':remote-user',
+  referrer: ':referrer',
+  responseTime: ':response-time[0] ms',
+  body: ':body'
+});
 
-module.exports = morgan(morganStack, { stream: myStream, skip: (req, res) => { return req.url === "/favicon.ico"} });
+const httpLoggerInterceptor = morgan(morganStack, {
+  stream: myStream,
+  skip: (req, res) => {
+    return req.url === '/favicon.ico' || req.status != 500;
+  }
+});
+
+const httpLoggerForServerErrorInterceptor = morgan(morganStack, {
+  stream: myStream,
+  immediate: true,
+  skip: (req, res) => {
+    return req.url === '/favicon.ico' || req.status === 500;
+  }
+});
+
+module.exports = { httpLoggerInterceptor, httpLoggerForServerErrorInterceptor };
