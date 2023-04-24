@@ -30,32 +30,11 @@ const morganStack = JSON.stringify({
   body: ':body'
 });
 
-//TODO - try to refactor to a function. Function style didint work to pass the status as param. 
-const morganStackServerError = JSON.stringify({
-  url: ':method - :url',
-  status: '500',
-  traceId: ':traceId',
-  userAgent: ':user-agent',
-  remoteAddr: ':remote-addr',
-  remoteUser: ':remote-user',
-  referrer: ':referrer',
-  responseTime: ':response-time[0] ms',
-  body: ':body'
-});
-
 const httpLoggerInterceptor = morgan(morganStack, {
   stream: myStream,
-  skip: (req, res) => {
-    return req.url === '/favicon.ico' || req.status === 500;
+  skip: function (req, res) {
+    req.url === '/favicon.ico';
   }
 });
 
-const httpLoggerForServerErrorInterceptor = morgan(morganStackServerError, {
-  stream: myStream,
-  immediate: true,
-  skip: (req, res) => {
-    return req.url === '/favicon.ico' || req.status < 499;
-  }
-});
-
-module.exports = { httpLoggerInterceptor, httpLoggerForServerErrorInterceptor };
+module.exports = { httpLoggerInterceptor };
