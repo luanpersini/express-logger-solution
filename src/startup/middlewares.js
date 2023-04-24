@@ -1,6 +1,6 @@
 
 const express = require('express');
-const requestLoggerMiddleware = require('../middlewares/http-logger-interceptor');
+const requestLoggerMiddleware = require('../middlewares/HttpLoggerInterceptor');
 const traceIdMiddleware =  require('../middlewares/TraceIdMiddleware');
 
 module.exports = function(app) {

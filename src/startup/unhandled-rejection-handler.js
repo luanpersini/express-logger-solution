@@ -1,6 +1,5 @@
 require('express-async-errors');
 const logger = require('../adapters/logger');
-const requestLoggerMiddleware = require('../middlewares/http-logger-interceptor');
 
 module.exports = () => {
   //We will not exit the process till:
